@@ -1,0 +1,26 @@
+{
+  "name": "Make WSJ & NYT Great Again",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Get around the paywall for many WSJ & NYT content",
+  "homepage_url": "http://blog.jinsongli.com",
+  "icons": {
+    "48": "icons/eric_cartman.png"
+  },
+  "background": {
+    "scripts": [
+      "src/bg/background.js"
+    ],
+    "persistent": true
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "https://*.wsj.com/*",
+    "http://*.wsj.com/*",
+    "https://*.nytimes.com/*",
+    "http://*.nytimes.com/*",
+    "https://*.nyt.com/*",
+    "http://*.nyt.com/*"
+  ]
+}

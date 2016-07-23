@@ -1,14 +1,16 @@
-var REFERER_KEY = 'Referer';
-var REFERER_VAL = 'https://www.google.com';
-var COOKIE_KEY = 'Cookie';
+var REFERER_KEY = "Referer";
+var REFERER_VAL = "https://www.google.com";
+var COOKIE_KEY = "Cookie";
+// nyt gateway javascript
+var GATEWAY_URL = "*://*.com/*mtr.js"
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function() {
 		console.log( "we are going to block nytimes gateway javascript" );
+		
 		return { cancel: true };
 	}, {
-		// it takes some time & tricks to find out these gateway javascript files!
-		urls: [ "*://*.com/*gwy.js", "*://*.com/*mtr.js" ],
+		urls: [ GATEWAY_URL ],
 		// target is script
 		types: [ "script" ]
 	},

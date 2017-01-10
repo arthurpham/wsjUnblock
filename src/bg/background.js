@@ -1,8 +1,27 @@
-var REFERER_KEY = "Referer";
-var REFERER_VAL = "https://www.google.com";
-var COOKIE_KEY = "Cookie";
-// nyt gateway javascript
-var GATEWAY_URL = "*://*.com/*mtr.js"
+
+var wsj = {
+	url: "*://*.wsj.com/*",
+	referer: {
+		name: "Referer",
+		value: "https://t.co/ZKs3xDMZi8",
+	},
+	cookie: {
+		name: "Cookie",
+		value: ""
+	},
+	useragent: {
+		name: "User-Agent",
+		value: "Mozilla/5.0 (iPhone; CPU iPhone OS 9_2_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13D15 Safari/601.1"
+	},
+	cachecontrol: {
+		name: "Cache-Control",
+		value: "max-age=0"
+	}
+};
+
+var nyt = {
+	gateway: "*://*.com/*mtr.js"
+};
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function() {
@@ -10,7 +29,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 		
 		return { cancel: true };
 	}, {
-		urls: [ GATEWAY_URL ],
+		urls: [ nyt.gateway ],
 		// target is script
 		types: [ "script" ]
 	},
@@ -23,17 +42,19 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 
 		// remove existing referer and cookie
 		for ( var i = 0; i < details.requestHeaders.length; i++) {
-			if ( details.requestHeaders[i].name === REFERER_KEY || details.requestHeaders[i].name === COOKIE_KEY ) {
+			if ( details.requestHeaders[i].name === wsj.referer.name || details.requestHeaders[i].name === wsj.cookie.name ) {
 		        details.requestHeaders.splice(i, 1);
 			}
 		}
 
 		// add new referer
-		details.requestHeaders.push({ name: REFERER_KEY, value: REFERER_VAL });
+		details.requestHeaders.push( wsj.referer );
+		details.requestHeaders.push( wsj.useragent );
+		details.requestHeaders.push( wsj.cachecontrol );
 
 		return { requestHeaders: details.requestHeaders };
 	}, {
-		urls: [ "*://*.wsj.com/*" ],
+		urls: [ wsj.url ],
 		// target is the document that is loaded for a top-level frame
 		types: [ "main_frame" ]
 	},

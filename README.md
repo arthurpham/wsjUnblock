@@ -27,10 +27,13 @@
 *	I wrote a blog [How to bypass WSJ and NYTimes paywalls?](http://blog.jinsongli.com/) about the details on my website.
 
 
-
-### Instructions
-[How to install a unpacked chrome extension](http://lifehacker.com/5919997/how-to-install-extensions-that-arent-from-the-official-chrome-web-store)
-
+### Install Instructions
+*	click "clone or download", download zip. The downloaded file is an unpacked chrome extension, unzip it into a directory.
+*	Visit `chrome://extensions` (via omnibox or menu -> Tools -> Extensions).
+*	Enable Developer mode by ticking the checkbox in the upper-right corner.
+*	Click on the "Load unpacked extension..." button.
+*	Select the directory containing your *unpacked* extension.
+*	Reference: [How to install an unpacked chrome extension](http://stackoverflow.com/questions/24577024/install-chrome-extension-not-in-the-store/24577660#24577660)
 
 
 ### License

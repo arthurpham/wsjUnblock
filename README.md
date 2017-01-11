@@ -3,7 +3,10 @@
 
 #### Get around the paywall for many Wall Street Journal and New York Times content
 
+### Update in Jan 2017:
+*	**Fact** WSJ has blocked `https://www.google.com` referer randomly on desktop.
 
+*	**Idea**: I changed the referer to facebook or twitter, both are working great again:). The logic is that we can read the full WSJ article if we click through a twitter or facebook link of the article. So far they have not blocked these referers.
 
 ### How It Works as in July 2016:
 

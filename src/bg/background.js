@@ -3,7 +3,7 @@ var wsj = {
 	url: "*://*.wsj.com/*",
 	referer: {
 		name: "Referer",
-		value: "https://t.co/ZKs3xDMZi8",
+		value: "https://www.twitter.com", // or "https://www.facebook.com"
 	},
 	cookie: {
 		name: "Cookie",

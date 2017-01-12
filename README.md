@@ -8,6 +8,8 @@
 
 *	**Idea**: I changed the referer to facebook or twitter, both are working great again:). The logic is that we can read the full WSJ article if we click through a twitter or facebook link of the article. So far they have not blocked these referers.
 
+*	**Extra**: Add Financial Times `www.ft.com` to our list. FT and WSJ are using the same logic for paywall, so it can be accessed in the same way.
+
 ### How It Works as in July 2016:
 
 #### For Wall Street Journal:

@@ -18,6 +18,8 @@
     "webRequestBlocking",
     "https://*.wsj.com/*",
     "http://*.wsj.com/*",
+    "https://*.ft.com/*",
+    "http://*.ft.com/*",
     "https://*.nytimes.com/*",
     "http://*.nytimes.com/*",
     "https://*.nyt.com/*",

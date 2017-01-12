@@ -1,6 +1,6 @@
 
-var wsj = {
-	url: "*://*.wsj.com/*",
+// new http header parameters to override
+var newHeader = {
 	referer: {
 		name: "Referer",
 		value: "https://www.twitter.com", // or "https://www.facebook.com"
@@ -19,8 +19,13 @@ var wsj = {
 	}
 };
 
-var nyt = {
-	gateway: "*://*.com/*mtr.js"
+// sites that we want to access
+var urls = {
+	wsj: "*://*.wsj.com/*",
+	ft: "*://*.ft.com/*",
+	nyt: {
+		gateway: "*://*.com/*mtr.js"
+	}
 };
 
 chrome.webRequest.onBeforeRequest.addListener(
@@ -29,7 +34,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 		
 		return { cancel: true };
 	}, {
-		urls: [ nyt.gateway ],
+		urls: [ urls.nyt.gateway ],
 		// target is script
 		types: [ "script" ]
 	},
@@ -38,23 +43,26 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
 	function( details ) {
-		console.log( "we are going to update wsj request headers & remove cookie" );
+		console.log( "we are going to override request headers" );
 
 		// remove existing referer and cookie
 		for ( var i = 0; i < details.requestHeaders.length; i++) {
-			if ( details.requestHeaders[i].name === wsj.referer.name || details.requestHeaders[i].name === wsj.cookie.name ) {
+			if ( details.requestHeaders[i].name === newHeader.referer.name || details.requestHeaders[i].name === newHeader.cookie.name ) {
 		        details.requestHeaders.splice(i, 1);
+		        i--;
 			}
 		}
 
 		// add new referer
-		details.requestHeaders.push( wsj.referer );
-		details.requestHeaders.push( wsj.useragent );
-		details.requestHeaders.push( wsj.cachecontrol );
+		details.requestHeaders.push( newHeader.referer );
+		// change user agent
+		details.requestHeaders.push( newHeader.useragent );
+		// remove cache
+		details.requestHeaders.push( newHeader.cachecontrol );
 
 		return { requestHeaders: details.requestHeaders };
 	}, {
-		urls: [ wsj.url ],
+		urls: [ urls.wsj, urls.ft ],
 		// target is the document that is loaded for a top-level frame
 		types: [ "main_frame" ]
 	},

@@ -1,10 +1,15 @@
 
 ## Make WSJ & NYTimes Great Again:
 
-#### Get around the paywall for many Wall Street Journal and New York Times content
+#### Get around the paywall for many Wall Street Journal, New York Times and Financial Times content
+
+### Update in Apr 2017:
+*	**Fact**: WSJ has an advertisement popping up *every single time* we read an article, too much!
+*	**Idea**: After checking their code, I find the pop-up ad is triggered by a javascript file, so let's just block it, using the same logic that we blocked the NYTimes gateway javascript.
+*	**Extra**: The pop-up ad will stay disappeared as long as the WSJ developers do not change the javascript names, I am sure they will at some point. So this is a practical but not ideal solution for right now.
 
 ### Update in Jan 2017:
-*	**Fact** WSJ has blocked `https://www.google.com` referer randomly on desktop.
+*	**Fact**: WSJ has blocked `https://www.google.com` referer randomly on desktop.
 
 *	**Idea**: I changed the referer to facebook or twitter, both are working great again:). The logic is that we can read the full WSJ article if we click through a twitter or facebook link of the article. So far they have not blocked these referers.
 

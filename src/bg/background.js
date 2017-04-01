@@ -9,10 +9,6 @@ var newHeader = {
 		name: "Cookie",
 		value: ""
 	},
-	useragent: {
-		name: "User-Agent",
-		value: "Mozilla/5.0 (iPhone; CPU iPhone OS 9_2_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13D15 Safari/601.1"
-	},
 	cachecontrol: {
 		name: "Cache-Control",
 		value: "max-age=0"
@@ -20,21 +16,26 @@ var newHeader = {
 };
 
 // sites that we want to access
-var urls = {
-	wsj: "*://*.wsj.com/*",
-	ft: "*://*.ft.com/*",
+var sites = {
+	wsj: {
+		url: "*://*.wsj.com/*",
+		js: "*://*/*cxense-candy.js" // this one causing a pop up advertisement for every article
+	},
+	ft: {
+		url: "*://*.ft.com/*",
+	},
 	nyt: {
-		gateway: "*://*.com/*mtr.js"
+		js: "*://*.com/*mtr.js" // this one causing a pop up asking for subscription
 	}
 };
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function() {
-		console.log( "we are going to block nytimes gateway javascript" );
+		console.log( "we are going to block some low energy javascripts" );
 		
 		return { cancel: true };
 	}, {
-		urls: [ urls.nyt.gateway ],
+		urls: [ sites.nyt.js, sites.wsj.js ],
 		// target is script
 		types: [ "script" ]
 	},
@@ -43,26 +44,24 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
 	function( details ) {
-		console.log( "we are going to override request headers" );
+		console.log( "we are going to override some request headers" );
 
 		// remove existing referer and cookie
 		for ( var i = 0; i < details.requestHeaders.length; i++) {
 			if ( details.requestHeaders[i].name === newHeader.referer.name || details.requestHeaders[i].name === newHeader.cookie.name ) {
-		        details.requestHeaders.splice(i, 1);
-		        i--;
+				details.requestHeaders.splice(i, 1);
+				i--;
 			}
 		}
 
 		// add new referer
 		details.requestHeaders.push( newHeader.referer );
-		// change user agent
-		details.requestHeaders.push( newHeader.useragent );
 		// remove cache
 		details.requestHeaders.push( newHeader.cachecontrol );
 
 		return { requestHeaders: details.requestHeaders };
 	}, {
-		urls: [ urls.wsj, urls.ft ],
+		urls: [ sites.wsj.url, sites.ft.url ],
 		// target is the document that is loaded for a top-level frame
 		types: [ "main_frame" ]
 	},
